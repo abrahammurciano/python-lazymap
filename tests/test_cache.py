@@ -1,3 +1,5 @@
+from typing import Any, List
+
 from pytest import FixtureRequest, fixture, param
 
 from lazymap import LazyMap
@@ -10,11 +12,11 @@ from lazymap import LazyMap
         param(LazyMap(default=lambda _: [], cache=True), id="default"),
     )
 )
-def cached_map(request: FixtureRequest) -> LazyMap[int, list]:
+def cached_map(request: FixtureRequest) -> LazyMap[int, List[Any]]:
     return request.param
 
 
-def test_cache(cached_map: LazyMap[int, list]) -> None:
+def test_cache(cached_map: LazyMap[int, List[Any]]) -> None:
     first = cached_map[1]
     second = cached_map[1]
     assert first is second
@@ -23,15 +25,15 @@ def test_cache(cached_map: LazyMap[int, list]) -> None:
 
 @fixture(
     params=(
-        param(LazyMap(lazy={1: list}, cache=False), id="lazy"),
+        param(LazyMap(lazy={1: List[Any]}, cache=False), id="lazy"),
         param(LazyMap(default=lambda _: [], cache=False), id="default"),
     )
 )
-def uncached_map(request: FixtureRequest) -> LazyMap[int, list]:
+def uncached_map(request: FixtureRequest) -> LazyMap[int, List[Any]]:
     return request.param
 
 
-def test_no_cache(uncached_map: LazyMap[int, list]) -> None:
+def test_no_cache(uncached_map: LazyMap[int, List[Any]]) -> None:
     first = uncached_map[1]
     second = uncached_map[1]
     assert first is not second
@@ -39,7 +41,7 @@ def test_no_cache(uncached_map: LazyMap[int, list]) -> None:
 
 
 def test_change_cache() -> None:
-    lazy_map: LazyMap[int, list] = LazyMap()
+    lazy_map: LazyMap[int, List[Any]] = LazyMap()
     lazy_map.lazy(1, lambda: [])
     first = lazy_map[1]
     second = lazy_map[1]
@@ -47,4 +49,5 @@ def test_change_cache() -> None:
     lazy_map.lazy(1, lambda: [], cache=False)
     first = lazy_map[1]
     second = lazy_map[1]
+    assert first is not second
     assert first is not second
