@@ -25,7 +25,7 @@ def test_cache(cached_map: LazyMap[int, List[Any]]) -> None:
 
 @fixture(
     params=(
-        param(LazyMap(lazy={1: List[Any]}, cache=False), id="lazy"),
+        param(LazyMap(lazy={1: list}, cache=False), id="lazy"),
         param(LazyMap(default=lambda _: [], cache=False), id="default"),
     )
 )
