@@ -11,8 +11,8 @@ documentation = "https://abrahammurciano.github.io/python-lazymap/lazymap"
 keywords = []
 
 [tool.poetry.dependencies]
-python = "^3.8"
-typing-extensions = "^4.11.0"
+python = ">=3.8"
+typing-extensions = ">=4.11.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "*"
